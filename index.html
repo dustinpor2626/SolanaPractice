@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Solana practice</title>
+    <style>
+      /* Center the form */
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        background-color: aliceblue;
+      }
+
+      label {
+        font-size: 24px;
+        background-color: rgb(208, 235, 155);
+        padding: 10px;
+      }
+
+      input {
+        width: 500px;
+        height: 25px;
+        border-radius: 11px;
+      }
+    </style>
+  </head>
+  <body>
+    <form>
+      <label for="input-text">Enter Solana Public key to get 1 SOL</label
+      ><br /><br />
+      <input type="text" id="publicKey" name="input-text" /><br /><br />
+      <button type="button" onclick="myFunction()">Get Token</button>
+    </form>
+
+    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+    <script>
+      const { Connection, PublicKey } = solanaWeb3;
+      async function myFunction() {
+        var publicKey = document.getElementById("publicKey").value;
+
+        const connection = await new Connection(
+          "https://api.devnet.solana.com"
+        );
+        let publicKeyObj = new PublicKey(publicKey);
+
+        let txhash = await connection.requestAirdrop(publicKeyObj, 1e9);
+        console.log(`txhash: ${txhash}`);
+
+        // additional code can go here
+      }
+    </script>
+  </body>
+</html>
